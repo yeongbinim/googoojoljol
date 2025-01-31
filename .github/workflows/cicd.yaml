@@ -3,7 +3,7 @@ name: CI/CD
 # 워크플로우 트리거 설정
 on:
   push:
-#    branches: [ main ]    # main 브랜치에 push될 때 실행
+    branches: [ main ]    # main 브랜치에 push될 때 실행
   pull_request:
     branches: [ main, dev ]    # main, dev 브랜치로 PR이 생성될 때 실행
 
