@@ -1,3 +1,28 @@
 spring:
-  profiles:
-    active: local
+  devtools:
+    restart.enabled: off
+    livereload.enabled: off
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=MySQL
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  sql:
+    init:
+      mode: never
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        show-sql: false # SQL 쿼리 로깅
+        format_sql: false # SQL 포맷팅 활성화
+        dialect: org.hibernate.dialect.H2Dialect
+        # ↓ 커넥션을 뷰 렌더링 단계까지 물고 있으므로 서버 자원 많이 사용, HTTP 요청이 완료될 때까지 영속성 컨텍스트 살아있음. 즉 뷰 템플릿에서 지연 로딩이 발생하면 DB 쿼리가 추가 실행
+    open-in-view: false
+    defer-datasource-initialization: false # DB 초기화(data.sql, schema.sql) 를 Hibernate의 테이블 생성 이후로 지연.
+
+logging:
+  level:
+    googoo.joljol: info
+    org.hibernate: warn

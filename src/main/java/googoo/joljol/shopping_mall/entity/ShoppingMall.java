@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +16,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "shopping_mall")
 @Getter
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ShoppingMall {
 
     @Id
@@ -29,17 +30,17 @@ public class ShoppingMall {
     @Column(name = "mall_name")
     private String mallName; // 쇼핑몰명
 
-    @Column(name = "domain", unique = true, nullable = false)
+    @Column(name = "domain", nullable = false)
     private String domain; // 도메인명 (필수, 유니크)
 
     @Column(name = "phone", nullable = false)
     private String phone; // 전화번호 (필수)
 
-    @Column(name = "operator_email", unique = true, nullable = false)
+    @Column(name = "operator_email", nullable = false)
     private String operatorEmail; // 운영자 이메일 (필수, 유니크)
 
-    @Column(name = "business_number", unique = true)
-    private String businessNumber; // 통신판매번호 (유니크)
+    @Column(name = "business_number")
+    private String businessNumber; // 통신판매번호 (not unique)
 
     @Column(name = "business_type")
     private String businessType; // 영업형태
