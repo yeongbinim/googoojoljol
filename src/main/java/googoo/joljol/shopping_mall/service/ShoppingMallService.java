@@ -1,5 +1,8 @@
 package googoo.joljol.shopping_mall.service;
 
+import static googoo.joljol.common.exception.ExceptionType.SHOPPING_MALL_NOT_FOUND;
+
+import googoo.joljol.common.exception.CustomException;
 import googoo.joljol.shopping_mall.dto.ShoppingMallTop10Dto;
 import googoo.joljol.shopping_mall.entity.ShoppingMall;
 import googoo.joljol.shopping_mall.entity.ShoppingMallStats;
@@ -28,10 +31,10 @@ public class ShoppingMallService {
     @Transactional
     public ShoppingMall getShoppingMallById(Long id) {
         ShoppingMall shoppingMall = shoppingMallRepository.findById(id)
-            .orElseThrow(() -> new IllegalArgumentException("쇼핑몰을 찾을 수 없습니다."));
+            .orElseThrow(() -> new CustomException(SHOPPING_MALL_NOT_FOUND));
 
         ShoppingMallStats stats = shoppingMallStatsRepository.findByShoppingMallId(id)
-            .orElseThrow(() -> new IllegalArgumentException("쇼핑몰 조회수 데이터를 찾을 수 없습니다."));
+            .orElseThrow(() -> new CustomException(SHOPPING_MALL_NOT_FOUND));
 
         stats.incrementViewCount();
         shoppingMallStatsRepository.save(stats);
