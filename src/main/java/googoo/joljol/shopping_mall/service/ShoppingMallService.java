@@ -1,9 +1,11 @@
 package googoo.joljol.shopping_mall.service;
 
+import googoo.joljol.shopping_mall.dto.ShoppingMallTop10Dto;
 import googoo.joljol.shopping_mall.entity.ShoppingMall;
 import googoo.joljol.shopping_mall.entity.ShoppingMallStats;
 import googoo.joljol.shopping_mall.repository.ShoppingMallRepository;
 import googoo.joljol.shopping_mall.repository.ShoppingMallStatsRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,5 +37,9 @@ public class ShoppingMallService {
         shoppingMallStatsRepository.save(stats);
 
         return shoppingMall;
+    }
+
+    public List<ShoppingMallTop10Dto> getTop10ShoppingMalls() {
+        return shoppingMallStatsRepository.findTop10ByOrderByViewCountDesc();
     }
 }

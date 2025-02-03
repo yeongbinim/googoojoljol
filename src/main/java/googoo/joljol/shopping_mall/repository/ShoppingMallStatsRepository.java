@@ -4,7 +4,8 @@ import googoo.joljol.shopping_mall.entity.ShoppingMallStats;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ShoppingMallStatsRepository extends JpaRepository<ShoppingMallStats, Long> {
+public interface ShoppingMallStatsRepository extends JpaRepository<ShoppingMallStats, Long>,
+    ShoppingMallStatsRepositoryCustom {
 
     Optional<ShoppingMallStats> findByShoppingMallId(Long shoppingMallId);
 }

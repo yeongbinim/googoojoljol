@@ -1,7 +1,9 @@
 package googoo.joljol.shopping_mall.controller;
 
+import googoo.joljol.shopping_mall.dto.ShoppingMallTop10Dto;
 import googoo.joljol.shopping_mall.entity.ShoppingMall;
 import googoo.joljol.shopping_mall.service.ShoppingMallService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,5 +36,10 @@ public class ShoppingMallController {
     @GetMapping("/{id}")
     public ResponseEntity<ShoppingMall> getShoppingMall(@PathVariable Long id) {
         return ResponseEntity.ok(shoppingMallService.getShoppingMallById(id));
+    }
+
+    @GetMapping("/top10")
+    public ResponseEntity<List<ShoppingMallTop10Dto>> getTop10ShoppingMalls() {
+        return ResponseEntity.ok(shoppingMallService.getTop10ShoppingMalls());
     }
 }
