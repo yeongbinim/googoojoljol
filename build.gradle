@@ -48,6 +48,7 @@ dependencies {
     // DB
     runtimeOnly 'com.mysql:mysql-connector-j'
     runtimeOnly 'com.h2database:h2'
+    implementation 'org.postgresql:postgresql'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 
     // P6Spy
@@ -55,7 +56,8 @@ dependencies {
     implementation 'com.github.gavlyukovskiy:datasource-decorator-spring-boot-autoconfigure:1.9.2'
 
     // redis
-//    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'com.redislabs:spring-redisearch:3.1.2' // redisearch
 
 }
 
