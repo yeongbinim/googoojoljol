@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/shopping-mall")
 public class ShoppingMallController {
+
     private final ShoppingMallService shoppingMallService;
 
     @GetMapping
@@ -24,7 +26,13 @@ public class ShoppingMallController {
         @RequestParam(required = false) String businessStatus,
         @PageableDefault Pageable pageable
     ) {
-        Page<ShoppingMall> shoppingMalls = shoppingMallService.getFilteredShoppingMalls(overallRating, businessStatus, pageable);
+        Page<ShoppingMall> shoppingMalls = shoppingMallService.getFilteredShoppingMalls(
+            overallRating, businessStatus, pageable);
         return ResponseEntity.ok(shoppingMalls);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ShoppingMall> getShoppingMall(@PathVariable Long id) {
+        return ResponseEntity.ok(shoppingMallService.getShoppingMallById(id));
     }
 }
