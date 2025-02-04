@@ -1,25 +1,23 @@
 package googoo.joljol.shopping_mall.controller;
 
+import googoo.joljol.shopping_mall.dto.ShoppingMallResponseDto;
 import googoo.joljol.shopping_mall.entity.ShoppingMall;
 import googoo.joljol.shopping_mall.entity.ShoppingMallForRedis;
-import googoo.joljol.shopping_mall.service.suk.ShoppingMallServiceV2;
-import googoo.joljol.shopping_mall.service.suk.ShoppingMallServiceV3UsingRedis;
-import googoo.joljol.shopping_mall.service.suk.ShoppingMallServiceV4UsingRedisSearch;
+import googoo.joljol.shopping_mall.service.suk.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 public class ShoppingMallControllerBySuk {
 
+    private final ProxyShoppingMallService proxyShoppingMallService;
     private final ShoppingMallServiceV2 shoppingMallServiceV2;
     private final ShoppingMallServiceV3UsingRedis shoppingMallServiceV3UsingRedis;
     private final ShoppingMallServiceV4UsingRedisSearch shoppingMallServiceV4UsingRedisSearch;
@@ -61,6 +59,17 @@ public class ShoppingMallControllerBySuk {
         Page<ShoppingMallForRedis> response = shoppingMallServiceV4UsingRedisSearch.getFilteredShoppingMallsV3UsingRediSearch(
                 overallRating, businessStatus, pageable
         );
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/shopping-mall/hot")
+    public ResponseEntity<List<ShoppingMallResponseDto>> getTop10ShoppingMalls(@RequestParam int top) {
+        return ResponseEntity.ok(proxyShoppingMallService.getHotShoppingMalls(top));
+    }
+
+    @GetMapping("/shopping-mall/view/{id}")
+    public ResponseEntity<ShoppingMall> getShoppingMall(@PathVariable Long id, @RequestParam Integer viewCount) {
+        ShoppingMall response = proxyShoppingMallService.getShoppingMallById(id, viewCount);
         return ResponseEntity.ok(response);
     }
 

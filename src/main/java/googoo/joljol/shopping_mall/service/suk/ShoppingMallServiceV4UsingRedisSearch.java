@@ -61,12 +61,12 @@ public class ShoppingMallServiceV4UsingRedisSearch {
 //                        .build()
 //        );
 //
-//        // 4️⃣ 검색 결과를 객체 리스트로 변환
+//        // 검색 결과를 객체 리스트로 변환
 //        List<ShoppingMallForRedis> results = searchResults.stream()
 //                .map(ShoppingMallForRedis::convertToShoppingMallForRedis)
 //                .toList();
 //
-//        // 5️⃣ 페이징하여 반환
+//        // 페이징하여 반환
 //        return new PageImpl<>(results, pageable, searchResults.getCount());
     }
 
