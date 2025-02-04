@@ -7,6 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+/*
+    * 인덱스를 사용해서 DB 단에서 필터링.
+ */
 @Service
 @RequiredArgsConstructor
 public class ShoppingMallServiceV2 {

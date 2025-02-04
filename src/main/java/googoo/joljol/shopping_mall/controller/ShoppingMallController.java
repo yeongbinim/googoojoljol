@@ -2,7 +2,7 @@ package googoo.joljol.shopping_mall.controller;
 
 import googoo.joljol.shopping_mall.entity.ShoppingMall;
 import googoo.joljol.shopping_mall.service.ShoppingMallService;
-import googoo.joljol.shopping_mall.service.suk.ShoppingMallServiceV3;
+import googoo.joljol.shopping_mall.service.suk.ShoppingMallServiceV3UsingRedis;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 public class ShoppingMallController {
 
     private final ShoppingMallService shoppingMallService;
-    private final ShoppingMallServiceV3 shoppingMallServiceV3;
+    private final ShoppingMallServiceV3UsingRedis shoppingMallServiceV3UsingRedis;
 
     @GetMapping
     public ResponseEntity<Page<ShoppingMall>> getShoppingMalls(

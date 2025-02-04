@@ -1,8 +1,10 @@
 package googoo.joljol.shopping_mall.controller;
 
 import googoo.joljol.shopping_mall.entity.ShoppingMall;
+import googoo.joljol.shopping_mall.entity.ShoppingMallForRedis;
 import googoo.joljol.shopping_mall.service.suk.ShoppingMallServiceV2;
-import googoo.joljol.shopping_mall.service.suk.ShoppingMallServiceV3;
+import googoo.joljol.shopping_mall.service.suk.ShoppingMallServiceV3UsingRedis;
+import googoo.joljol.shopping_mall.service.suk.ShoppingMallServiceV4UsingRedisSearch;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShoppingMallControllerBySuk {
 
     private final ShoppingMallServiceV2 shoppingMallServiceV2;
-    private final ShoppingMallServiceV3 shoppingMallServiceV3;
+    private final ShoppingMallServiceV3UsingRedis shoppingMallServiceV3UsingRedis;
+    private final ShoppingMallServiceV4UsingRedisSearch shoppingMallServiceV4UsingRedisSearch;
+
 
     // index 성능 개선
     @GetMapping("/shopping-mall/v2")
@@ -28,10 +32,10 @@ public class ShoppingMallControllerBySuk {
             @RequestParam(required = false) String businessStatus,
             @PageableDefault Pageable pageable
     ) {
-        Page<ShoppingMall> shoppingMalls = shoppingMallServiceV2.getFilteredShoppingMallsV2UsingIndex(
+        Page<ShoppingMall> response = shoppingMallServiceV2.getFilteredShoppingMallsV2UsingIndex(
                 overallRating, businessStatus, pageable
         );
-        return ResponseEntity.ok(shoppingMalls);
+        return ResponseEntity.ok(response);
     }
 
     // using redis
@@ -41,15 +45,23 @@ public class ShoppingMallControllerBySuk {
             @RequestParam(required = false) String businessStatus,
             @PageableDefault Pageable pageable
     ) {
-        Page<ShoppingMall> result = shoppingMallServiceV3.getFilteredShoppingMallsV3UsingCache(
+        Page<ShoppingMall> response = shoppingMallServiceV3UsingRedis.getFilteredShoppingMallsV3UsingCache(
                 overallRating, businessStatus, pageable
         );
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/shopping-mall/{shoppingMallId}")
-    public ResponseEntity<ShoppingMall> getSpecificShoppingMall(@PathVariable Long shoppingMallId) {
-
-        return new ResponseEntity(null, HttpStatus.OK);
+    // using redisearch
+    @GetMapping("/shopping-mall/v4")
+    public ResponseEntity<Page<ShoppingMallForRedis>> getShoppingMallsV4UsingRediSearch(
+            @RequestParam(required = false) Integer overallRating,
+            @RequestParam(required = false) String businessStatus,
+            @PageableDefault Pageable pageable
+    ) {
+        Page<ShoppingMallForRedis> response = shoppingMallServiceV4UsingRedisSearch.getFilteredShoppingMallsV3UsingRediSearch(
+                overallRating, businessStatus, pageable
+        );
+        return ResponseEntity.ok(response);
     }
+
 }

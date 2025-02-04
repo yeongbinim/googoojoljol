@@ -89,10 +89,6 @@ public CompletableFuture<Void> insertDataIntoRedisWithZSetAsync() {
 
 ![db](https://github.com/user-attachments/assets/366ad7b1-7145-40c7-8a7f-0d153e8e4812)
 
-
-
-
-
 **레디스 캐싱을 이용한 조회 방식 `5.69s`**
 
 ![Redis Caching](https://github.com/user-attachments/assets/734421d6-14e7-41ba-ba22-d0999c1058a0)
@@ -100,3 +96,38 @@ public CompletableFuture<Void> insertDataIntoRedisWithZSetAsync() {
 -> 사실 비교할 필요도 없는 듯하다.
 
 # `Redis`를 이용한 캐시 전략 - `RediSearch`
+
+Redis의 기본 검색 기능(KEYS, SCAN)은 전체 키를 탐색하는 방식이라서 성능이 낮을 수 있다. 반면, RediSearch는 인덱스를 미리 생성하여 검색 성능을 최적화한다. 예를 들어, Redis의 기본적인 key-value 구조에 RediSearch의 인덱스를 추가로 사용하는 이유는 다음과 같다.
+
+1. 복잡한 검색 기능 지원
+
+* 기본 Redis는 정확한 key로만 데이터를 찾을 수 있다.
+* RediSearch를 사용하면 전문 검색(full-text search), 퍼지 검색(fuzzy search, 정확하지 않은 검색어나 오타가 있어도 비슷한 단어나 표현을 찾아주는 검색 방식), 접두사/접미사 검색 등 다양한 검색이 가능해진다.
+
+2. 성능 최적화
+
+* 일반 Redis에서 value 내용으로 검색하려면 모든 key를 순회해야 한다.
+* 인덱스를 사용하면 필요한 데이터만 빠르게 찾을 수 있어 검색 성능이 크게 향상될 수 있다.
+
+3. 필터링과 정렬
+
+* 인덱스를 통해 특정 필드 기반의 필터링이 가능하다.
+* 정렬된 결과를 효율적으로 반환할 수 있다.
+
+사용자 정보를 저장할 때를 예를 들어보면,
+
+```plaintext
+# 기본 Redis
+SET user:1 "{name:'김철수', age:25, city:'서울'}"
+SET user:2 "{name:'이영희', age:30, city:'부산'}"
+
+# 모든 서울 사용자를 찾으려면 모든 key를 검색해야 함.
+
+---
+
+# 인덱스 생성
+FT.CREATE idx:users ON hash PREFIX 1 user: SCHEMA name TEXT age NUMERIC city TAG
+
+# 서울 사용자를 바로 검색 가능
+FT.SEARCH idx:users "@city:{서울}"
+```

@@ -1,5 +1,8 @@
 package googoo.joljol.common.config;
 
+import com.redislabs.lettusearch.RediSearchClient;
+import com.redislabs.lettusearch.StatefulRediSearchConnection;
+import io.lettuce.core.RedisClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
@@ -26,7 +29,18 @@ public class RedisConfig {
 
         // 모든 경우
 //        redisTemplate.setDefaultSerializer(StringRedisSerializer())
-
         return redisTemplate;
     }
+
+    @Bean
+    public RedisClient redisClient() {
+        return RedisClient.create();
+    }
+
+    @Bean
+    public StatefulRediSearchConnection<String, String> rediSearchConnection(RedisClient redisClient) {
+        RediSearchClient rediSearchClient = RediSearchClient.create(redisClient.getResources(), "redis://localhost:6379");
+        return rediSearchClient.connect();
+    }
+
 }
