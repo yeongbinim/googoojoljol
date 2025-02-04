@@ -8,7 +8,10 @@ import googoo.joljol.shopping_mall.entity.ShoppingMallStats;
 import googoo.joljol.shopping_mall.repository.RedisLockRepository;
 import googoo.joljol.shopping_mall.repository.ShoppingMallRepository;
 import googoo.joljol.shopping_mall.repository.ShoppingMallStatsRepository;
+import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +23,7 @@ public class ShoppingMallLockService {
     private final ShoppingMallStatsRepository shoppingMallStatsRepository;
     private final ShoppingMallOptimisticLockService optimisticLockService;
     private final RedisLockRepository redisLockRepository;
+    private final RedissonClient redissonClient;
 
     public synchronized ShoppingMall getShoppingMallByIdWithSynchronized(Long id) {
         ShoppingMall shoppingMall = shoppingMallRepository.findById(id)
@@ -79,6 +83,34 @@ public class ShoppingMallLockService {
             return shoppingMall;
         } finally {
             redisLockRepository.unLock(id);
+        }
+    }
+
+    @Transactional
+    public ShoppingMall getShoppingMallByIdWithRedisson(Long id) throws InterruptedException {
+        RLock lock = redissonClient.getLock(id.toString());
+
+        try {
+            boolean available = lock.tryLock(25, 1, TimeUnit.SECONDS);
+
+            if (available) {
+                ShoppingMall shoppingMall = shoppingMallRepository.findById(id)
+                    .orElseThrow(() -> new CustomException(SHOPPING_MALL_NOT_FOUND));
+
+                ShoppingMallStats stats = shoppingMallStatsRepository
+                    .findByShoppingMallId(id)
+                    .orElseThrow(() -> new CustomException(SHOPPING_MALL_NOT_FOUND));
+
+                stats.incrementViewCount();
+                shoppingMallStatsRepository.save(stats);
+
+                return shoppingMall;
+            }
+            return null;
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            lock.unlock();
         }
     }
 }
