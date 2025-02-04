@@ -1,6 +1,7 @@
 package googoo.joljol.shopping_mall.service;
 
 import static googoo.joljol.common.exception.ExceptionType.SHOPPING_MALL_NOT_FOUND;
+import static googoo.joljol.common.exception.ExceptionType.SHOPPING_MALL_STATS_NOT_FOUND;
 
 import googoo.joljol.common.exception.CustomException;
 import googoo.joljol.shopping_mall.dto.ShoppingMallTop10Dto;
@@ -34,7 +35,7 @@ public class ShoppingMallService {
             .orElseThrow(() -> new CustomException(SHOPPING_MALL_NOT_FOUND));
 
         ShoppingMallStats stats = shoppingMallStatsRepository.findByShoppingMallId(id)
-            .orElseThrow(() -> new CustomException(SHOPPING_MALL_NOT_FOUND));
+            .orElseThrow(() -> new CustomException(SHOPPING_MALL_STATS_NOT_FOUND));
 
         stats.incrementViewCount();
         shoppingMallStatsRepository.save(stats);
