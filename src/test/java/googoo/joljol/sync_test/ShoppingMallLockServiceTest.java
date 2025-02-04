@@ -6,7 +6,7 @@ import googoo.joljol.shopping_mall.entity.ShoppingMall;
 import googoo.joljol.shopping_mall.entity.ShoppingMallStats;
 import googoo.joljol.shopping_mall.repository.ShoppingMallRepository;
 import googoo.joljol.shopping_mall.repository.ShoppingMallStatsRepository;
-import googoo.joljol.shopping_mall.service.ShoppingMallLockService;
+import googoo.joljol.shopping_mall.service.lock.ShoppingMallLockService;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -83,6 +83,31 @@ class ShoppingMallLockServiceTest {
             executorService.submit(() -> {
                 try {
                     shoppingMallService.getShoppingMallByIdWithPessimisticLock(shoppingMallId);
+                } finally {
+                    latch.countDown();
+                }
+            });
+        }
+
+        latch.await();
+
+        ShoppingMallStats stats = shoppingMallStatsRepository.findByShoppingMallId(shoppingMallId)
+            .orElseThrow();
+        assertThat(stats.getViewCount()).isEqualTo(100);
+    }
+
+    @Test
+    void 조회수_100개_동시에_증가_OptimisticLock() throws InterruptedException {
+        int threadCount = 100;
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        CountDownLatch latch = new CountDownLatch(threadCount);
+
+        for (int i = 0; i < threadCount; i++) {
+            executorService.submit(() -> {
+                try {
+                    shoppingMallService.getShoppingMallByIdWithOptimisticLock(shoppingMallId);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 } finally {
                     latch.countDown();
                 }
