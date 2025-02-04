@@ -19,4 +19,12 @@ public interface ShoppingMallStatsRepository extends JpaRepository<ShoppingMallS
           WHERE s.shoppingMall.id = :shoppingMallId
         """)
     Optional<ShoppingMallStats> findByShoppingMallIdWithPessimisticLock(Long shoppingMallId);
+
+
+    @Query("""
+          SELECT s
+          FROM ShoppingMallStats s
+          WHERE s.shoppingMall.id = :shoppingMallId
+        """)
+    Optional<ShoppingMallStats> findByShoppingMallIdWithOptimisticLock(Long shoppingMallId);
 }

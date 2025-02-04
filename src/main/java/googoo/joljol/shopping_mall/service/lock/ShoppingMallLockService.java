@@ -1,4 +1,4 @@
-package googoo.joljol.shopping_mall.service;
+package googoo.joljol.shopping_mall.service.lock;
 
 import static googoo.joljol.common.exception.ExceptionType.SHOPPING_MALL_NOT_FOUND;
 
@@ -17,6 +17,7 @@ public class ShoppingMallLockService {
 
     private final ShoppingMallRepository shoppingMallRepository;
     private final ShoppingMallStatsRepository shoppingMallStatsRepository;
+    private final ShoppingMallOptimisticLockService optimisticLockService;
 
     public synchronized ShoppingMall getShoppingMallByIdWithSynchronized(Long id) {
         ShoppingMall shoppingMall = shoppingMallRepository.findById(id)
@@ -44,5 +45,15 @@ public class ShoppingMallLockService {
         shoppingMallStatsRepository.save(stats);
 
         return shoppingMall;
+    }
+
+    public ShoppingMall getShoppingMallByIdWithOptimisticLock(Long id) throws InterruptedException {
+        while (true) {
+            try {
+                return optimisticLockService.callOptimisticLock(id);
+            } catch (Exception e) {
+                Thread.sleep(50);
+            }
+        }
     }
 }
