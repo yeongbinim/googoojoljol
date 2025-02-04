@@ -5,6 +5,7 @@ import static googoo.joljol.common.exception.ExceptionType.SHOPPING_MALL_NOT_FOU
 import googoo.joljol.common.exception.CustomException;
 import googoo.joljol.shopping_mall.entity.ShoppingMall;
 import googoo.joljol.shopping_mall.entity.ShoppingMallStats;
+import googoo.joljol.shopping_mall.repository.RedisLockRepository;
 import googoo.joljol.shopping_mall.repository.ShoppingMallRepository;
 import googoo.joljol.shopping_mall.repository.ShoppingMallStatsRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class ShoppingMallLockService {
     private final ShoppingMallRepository shoppingMallRepository;
     private final ShoppingMallStatsRepository shoppingMallStatsRepository;
     private final ShoppingMallOptimisticLockService optimisticLockService;
+    private final RedisLockRepository redisLockRepository;
 
     public synchronized ShoppingMall getShoppingMallByIdWithSynchronized(Long id) {
         ShoppingMall shoppingMall = shoppingMallRepository.findById(id)
@@ -54,6 +56,29 @@ public class ShoppingMallLockService {
             } catch (Exception e) {
                 Thread.sleep(50);
             }
+        }
+    }
+
+    @Transactional
+    public ShoppingMall getShoppingMallByIdWithLettuce(Long id) throws InterruptedException {
+        while (!redisLockRepository.lock(id)) {
+            Thread.sleep(100);
+        }
+
+        try {
+            ShoppingMall shoppingMall = shoppingMallRepository.findById(id)
+                .orElseThrow(() -> new CustomException(SHOPPING_MALL_NOT_FOUND));
+
+            ShoppingMallStats stats = shoppingMallStatsRepository
+                .findByShoppingMallId(id)
+                .orElseThrow(() -> new CustomException(SHOPPING_MALL_NOT_FOUND));
+
+            stats.incrementViewCount();
+            shoppingMallStatsRepository.save(stats);
+
+            return shoppingMall;
+        } finally {
+            redisLockRepository.unLock(id);
         }
     }
 }

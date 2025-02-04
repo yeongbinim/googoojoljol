@@ -55,8 +55,7 @@ dependencies {
     implementation 'com.github.gavlyukovskiy:datasource-decorator-spring-boot-autoconfigure:1.9.2'
 
     // redis
-//    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {
