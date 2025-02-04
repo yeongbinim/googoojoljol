@@ -9,6 +9,7 @@ import googoo.joljol.shopping_mall.repository.ShoppingMallRepository;
 import googoo.joljol.shopping_mall.repository.ShoppingMallStatsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -22,6 +23,21 @@ public class ShoppingMallLockService {
             .orElseThrow(() -> new CustomException(SHOPPING_MALL_NOT_FOUND));
 
         ShoppingMallStats stats = shoppingMallStatsRepository.findByShoppingMallId(id)
+            .orElseThrow(() -> new CustomException(SHOPPING_MALL_NOT_FOUND));
+
+        stats.incrementViewCount();
+        shoppingMallStatsRepository.save(stats);
+
+        return shoppingMall;
+    }
+
+    @Transactional
+    public ShoppingMall getShoppingMallByIdWithPessimisticLock(Long id) {
+        ShoppingMall shoppingMall = shoppingMallRepository.findById(id)
+            .orElseThrow(() -> new CustomException(SHOPPING_MALL_NOT_FOUND));
+
+        ShoppingMallStats stats = shoppingMallStatsRepository
+            .findByShoppingMallIdWithPessimisticLock(id)
             .orElseThrow(() -> new CustomException(SHOPPING_MALL_NOT_FOUND));
 
         stats.incrementViewCount();
