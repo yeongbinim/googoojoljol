@@ -16,7 +16,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "shopping_mall")
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
+@AllArgsConstructor
 public class ShoppingMall {
 
     @Id
