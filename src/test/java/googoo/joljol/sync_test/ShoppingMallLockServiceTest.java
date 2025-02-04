@@ -145,4 +145,29 @@ class ShoppingMallLockServiceTest {
             .orElseThrow();
         assertThat(stats.getViewCount()).isEqualTo(100);
     }
+
+    @Test
+    void 조회수_100개_동시에_증가_Redisson() throws InterruptedException {
+        int threadCount = 100;
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        CountDownLatch latch = new CountDownLatch(threadCount);
+
+        for (int i = 0; i < threadCount; i++) {
+            executorService.submit(() -> {
+                try {
+                    shoppingMallService.getShoppingMallByIdWithRedisson(shoppingMallId);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                } finally {
+                    latch.countDown();
+                }
+            });
+        }
+
+        latch.await();
+
+        ShoppingMallStats stats = shoppingMallStatsRepository.findByShoppingMallId(shoppingMallId)
+            .orElseThrow();
+        assertThat(stats.getViewCount()).isEqualTo(100);
+    }
 }
