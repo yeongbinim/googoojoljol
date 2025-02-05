@@ -6,4 +6,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface ShoppingMallRepositoryCustom {
     Page<ShoppingMall> findByFilters(Integer overallRating, String businessStatus, Pageable pageable);
+    Page<ShoppingMall> findByFiltersV2(Integer overallRating, String businessStatus, Pageable pageable);
 }

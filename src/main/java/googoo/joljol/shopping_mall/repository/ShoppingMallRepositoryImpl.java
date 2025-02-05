@@ -15,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
-@Repository
 @RequiredArgsConstructor
 public class ShoppingMallRepositoryImpl implements ShoppingMallRepositoryCustom {
 
@@ -44,5 +43,28 @@ public class ShoppingMallRepositoryImpl implements ShoppingMallRepositoryCustom 
                 );
 
         return PageableExecutionUtils.getPage(results, pageable, countQuery::fetchOne);
+    }
+
+    @Override
+    public Page<ShoppingMall> findByFiltersV2(Integer overallRating, String businessStatus, Pageable pageable) {
+
+        List<ShoppingMall> content = queryFactory.selectFrom(shoppingMall)
+                .where(
+                        overallRating != null ? shoppingMall.overallRating.eq(overallRating) : null,
+                        businessStatus != null ? shoppingMall.businessStatus.containsIgnoreCase(businessStatus) : null
+                )
+                .orderBy(shoppingMall.monitoringDate.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        JPAQuery<Long> countQuery = queryFactory.select(shoppingMall.count())
+                .from(shoppingMall)
+                .where(
+                        overallRating != null ? shoppingMall.overallRating.eq(overallRating) : null,
+                        businessStatus != null ? shoppingMall.businessStatus.containsIgnoreCase(businessStatus) : null
+                );
+
+        return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchOne);
     }
 }

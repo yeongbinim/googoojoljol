@@ -37,4 +37,10 @@ public class ShoppingMallStats {
     public void incrementViewCount() {
         this.viewCount++;
     }
+
+    public ShoppingMallStats(ShoppingMall shoppingMall, int viewCount) {
+        this.shoppingMall = shoppingMall;
+        this.viewCount = viewCount;
+    }
+
 }

@@ -5,6 +5,7 @@ import static googoo.joljol.shopping_mall.entity.QShoppingMallStats.shoppingMall
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import googoo.joljol.shopping_mall.dto.ShoppingMallResponseDto;
 import googoo.joljol.shopping_mall.dto.ShoppingMallTop10Dto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -34,5 +35,25 @@ public class ShoppingMallStatsRepositoryImpl implements ShoppingMallStatsReposit
             .orderBy(shoppingMallStats.viewCount.desc())
             .limit(10)
             .fetch();
+    }
+
+    @Override
+    public List<ShoppingMallResponseDto> findHotShoppingMallByOrderByViewCountDesc(int count) {
+        return queryFactory
+                .select(Projections.constructor(ShoppingMallResponseDto.class,
+                        shoppingMall.id,
+                        shoppingMall.name,
+                        shoppingMall.mallName,
+                        shoppingMall.domain,
+                        shoppingMall.phone,
+                        shoppingMall.businessStatus,
+                        shoppingMall.overallRating,
+                        shoppingMallStats.viewCount
+                ))
+                .from(shoppingMallStats)
+                .leftJoin(shoppingMallStats.shoppingMall, shoppingMall)
+                .orderBy(shoppingMallStats.viewCount.desc())
+                .limit(count)
+                .fetch();
     }
 }
