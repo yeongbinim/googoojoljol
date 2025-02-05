@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static googoo.joljol.common.exception.ExceptionType.SHOPPING_MALL_NOT_FOUND;
+import static googoo.joljol.common.exception.ExceptionType.SHOPPING_MALL_STATS_NOT_FOUND;
 
 @Slf4j
 @Service
@@ -27,17 +28,17 @@ public class ShoppingMallService {
     private final ShoppingMallStatsRepository shoppingMallStatsRepository;
 
     public Page<ShoppingMall> getFilteredShoppingMalls(Integer overallRating, String businessStatus,
-                                                       Pageable pageable) {
+        Pageable pageable) {
         return shoppingMallRepository.findByFilters(overallRating, businessStatus, pageable);
     }
 
     @Transactional
     public ShoppingMall getShoppingMallById(Long id) {
         ShoppingMall shoppingMall = shoppingMallRepository.findById(id)
-                .orElseThrow(() -> new CustomException(SHOPPING_MALL_NOT_FOUND));
+            .orElseThrow(() -> new CustomException(SHOPPING_MALL_NOT_FOUND));
 
         ShoppingMallStats stats = shoppingMallStatsRepository.findByShoppingMallId(id)
-                .orElseThrow(() -> new CustomException(SHOPPING_MALL_NOT_FOUND));
+            .orElseThrow(() -> new CustomException(SHOPPING_MALL_STATS_NOT_FOUND));
 
         stats.incrementViewCount();
         shoppingMallStatsRepository.save(stats);
@@ -48,5 +49,4 @@ public class ShoppingMallService {
     public List<ShoppingMallTop10Dto> getTop10ShoppingMalls() {
         return shoppingMallStatsRepository.findTop10ByOrderByViewCountDesc();
     }
-
 }

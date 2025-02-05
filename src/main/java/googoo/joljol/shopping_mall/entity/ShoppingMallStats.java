@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,9 +30,17 @@ public class ShoppingMallStats {
 
     @Column(name = "view_count", nullable = false)
     private int viewCount = 0; // 조회수 초기값 0
-    
+
+    @Version
+    private Long version;
+
     public void incrementViewCount() {
         this.viewCount++;
+    }
+
+    public ShoppingMallStats(ShoppingMall shoppingMall, int viewCount) {
+        this.shoppingMall = shoppingMall;
+        this.viewCount = viewCount;
     }
 
 }

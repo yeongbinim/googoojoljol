@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "shopping_mall")
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ShoppingMall {
 
     @Id
@@ -120,4 +119,14 @@ public class ShoppingMall {
 
     @Column(name = "monitoring_date", nullable = false)
     private LocalDate monitoringDate; // 모니터링 날짜 (필수)
+
+    public ShoppingMall(String name) {
+        this.name = name;
+        this.domain = "domain";
+        this.phone = "010-0000-000";
+        this.operatorEmail = "test@test.test";
+        this.businessStatus = "운영중";
+        this.overallRating = 3;
+        this.monitoringDate = LocalDate.now();
+    }
 }

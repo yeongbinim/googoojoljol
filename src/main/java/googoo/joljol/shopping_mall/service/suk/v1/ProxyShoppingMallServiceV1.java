@@ -57,7 +57,7 @@ public class ProxyShoppingMallServiceV1 {
     // V1은 조회하면 바로 DB에 반영. 그렇기에 동시성 이슈가 발생.
     public void updateViewCountV1(ShoppingMall shoppingMall, String ip) {
         ShoppingMallStats stats = shoppingMallStatsRepository.findByShoppingMallId(shoppingMall.getId())
-                .orElse(new ShoppingMallStats(null, shoppingMall, 0));
+                .orElse(new ShoppingMallStats(shoppingMall, 0));
 
         if (stats.getId() == null) { // 없으면 생성. 이것때문에 Transaction write 모드인데 직관적이지는 않다.
             shoppingMallStatsRepository.save(stats);

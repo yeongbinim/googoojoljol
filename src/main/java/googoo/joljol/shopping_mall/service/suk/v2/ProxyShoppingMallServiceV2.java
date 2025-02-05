@@ -57,7 +57,7 @@ public class ProxyShoppingMallServiceV2 {
 
     public void updateViewCountV2(ShoppingMall shoppingMall, String ip) {
         ShoppingMallStats stats = shoppingMallStatsRepository.findByShoppingMallId(shoppingMall.getId())
-                .orElse(new ShoppingMallStats(null, shoppingMall, 1));
+                .orElse(new ShoppingMallStats(shoppingMall, 1));
 
         if (stats.getId() == null) { // 업으면 생성. 하지만 V2에서는 업데이트를 배치로 한 번에 할 예정
             shoppingMallStatsRepository.save(stats);

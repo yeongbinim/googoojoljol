@@ -48,8 +48,8 @@ dependencies {
     // DB
     runtimeOnly 'com.mysql:mysql-connector-j'
     runtimeOnly 'com.h2database:h2'
-    implementation 'org.postgresql:postgresql'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+    implementation 'org.postgresql:postgresql'
 
     // P6Spy
     implementation 'p6spy:p6spy:3.9.1'
@@ -60,7 +60,7 @@ dependencies {
 
     // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
+    implementation 'org.redisson:redisson-spring-boot-starter:3.44.0'
 }
 
 tasks.named('test') {
