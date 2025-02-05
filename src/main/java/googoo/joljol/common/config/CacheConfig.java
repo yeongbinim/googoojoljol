@@ -41,13 +41,13 @@ public class CacheConfig {
     }
 
 //    @Bean
-    public CacheManager cacheManager() {
-        SimpleCacheManager cacheManager = new SimpleCacheManager();
-        ArrayList<ConcurrentMapCache> caches = new ArrayList<>();
-        caches.add(new ConcurrentMapCache("localCache_topMalls"));
-        cacheManager.setCaches(caches);
-        return cacheManager;
-    }
+//    public CacheManager cacheManager() {
+//        SimpleCacheManager cacheManager = new SimpleCacheManager();
+//        ArrayList<ConcurrentMapCache> caches = new ArrayList<>();
+//        caches.add(new ConcurrentMapCache("localCache_topMalls"));
+//        cacheManager.setCaches(caches);
+//        return cacheManager;
+//    }
 
 //    @Primary
 //    @Bean
