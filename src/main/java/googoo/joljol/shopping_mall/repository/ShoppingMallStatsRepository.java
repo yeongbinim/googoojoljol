@@ -20,7 +20,7 @@ public interface ShoppingMallStatsRepository extends JpaRepository<ShoppingMallS
         """)
     Optional<ShoppingMallStats> findByShoppingMallIdWithPessimisticLock(Long shoppingMallId);
 
-
+    @Lock(LockModeType.OPTIMISTIC)
     @Query("""
           SELECT s
           FROM ShoppingMallStats s
