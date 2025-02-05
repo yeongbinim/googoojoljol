@@ -2,6 +2,7 @@ package googoo.joljol.shopping_mall.controller.suk;
 
 import googoo.joljol.shopping_mall.dto.ShoppingMallResponseDto;
 import googoo.joljol.shopping_mall.entity.ShoppingMall;
+import googoo.joljol.shopping_mall.service.ShoppingMallService;
 import googoo.joljol.shopping_mall.service.suk.v1.ProxyShoppingMallServiceV1;
 import googoo.joljol.shopping_mall.service.suk.v2.ProxyShoppingMallServiceV2;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,12 +19,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ShoppingMallControllerBySuk {
 
+    private final ShoppingMallService shoppingMallServiceV0;
     private final ProxyShoppingMallServiceV1 proxyShoppingMallServiceV1;
     private final ProxyShoppingMallServiceV2 proxyShoppingMallServiceV2;
 
+    // DB 조회
+    @GetMapping("/shopping-mall/v0/ranking")
+    public ResponseEntity<List<ShoppingMallResponseDto>> getTopShoppingMallsV0(@RequestParam int top) {
+        return ResponseEntity.ok(shoppingMallServiceV0.getTopShoppingMalls(top));
+    }
+
     // 그냥 리스트 캐싱
-    @GetMapping("/shopping-mall/ranking")
-    public ResponseEntity<List<ShoppingMallResponseDto>> getTopShoppingMalls(@RequestParam int top) {
+    @GetMapping("/shopping-mall/v1/ranking")
+    public ResponseEntity<List<ShoppingMallResponseDto>> getTopShoppingMallsV1(@RequestParam int top) {
         return ResponseEntity.ok(proxyShoppingMallServiceV1.getTopRankingShoppingMallsV1(top));
     }
 

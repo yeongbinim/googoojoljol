@@ -1,6 +1,8 @@
 package googoo.joljol.shopping_mall.service;
 
 import googoo.joljol.common.exception.CustomException;
+import googoo.joljol.common.exception.ExceptionType;
+import googoo.joljol.shopping_mall.dto.ShoppingMallResponseDto;
 import googoo.joljol.shopping_mall.dto.ShoppingMallTop10Dto;
 import googoo.joljol.shopping_mall.entity.ShoppingMall;
 import googoo.joljol.shopping_mall.entity.ShoppingMallStats;
@@ -48,5 +50,13 @@ public class ShoppingMallService {
 
     public List<ShoppingMallTop10Dto> getTop10ShoppingMalls() {
         return shoppingMallStatsRepository.findTop10ByOrderByViewCountDesc();
+    }
+
+    public List<ShoppingMallResponseDto> getTopShoppingMalls(int top) {
+        if (top < 10 || top > 100) {
+            throw new CustomException(ExceptionType.SHOPPING_MALL_HOT_RANK_BAD_REQUEST);
+        }
+
+        return shoppingMallStatsRepository.findHotShoppingMallByOrderByViewCountDesc(top);
     }
 }

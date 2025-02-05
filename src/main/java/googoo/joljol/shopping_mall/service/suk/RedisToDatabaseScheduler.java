@@ -28,6 +28,7 @@ public class RedisToDatabaseScheduler {
         Long zSetSize = redisTemplate.opsForZSet().size("top100Malls:zset");
         long hashSize = redisTemplate.opsForHash().size("top100Malls:hash");
 
+        // 임시 방편
         if (zSetSize != hashSize) return;
 
         List<ShoppingMallResponseDto> cacheData = cacheableShoppingMallServiceV2.getCacheData(zSetSize);

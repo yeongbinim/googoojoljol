@@ -111,8 +111,6 @@ public class CacheableShoppingMallServiceV2 {
         Map<String, Object> entries = hashOps.entries(HASH_CACHE_KEY);
         Set<ZSetOperations.TypedTuple<Object>> cache = zSetOps.reverseRangeWithScores(ZSET_CACHE_KEY, 0, size - 1);
 
-        // zSet과 Hash 사이즈가 불일치하면 막아줘야 하는데 일단은 그냥 진행하고 나중에 막자
-
         if (cache == null) {
             return List.of();
         }
