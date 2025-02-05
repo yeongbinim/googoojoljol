@@ -34,8 +34,4 @@ public class ShoppingMallStats {
         this.viewCount++;
     }
 
-    // 원하는 만큼 viewCount 증가
-    public void increaseViewCountBy(int viewCount) {
-        this.viewCount += viewCount;
-    }
 }

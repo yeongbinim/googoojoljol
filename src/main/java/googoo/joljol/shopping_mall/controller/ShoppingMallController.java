@@ -1,6 +1,6 @@
 package googoo.joljol.shopping_mall.controller;
 
-import googoo.joljol.shopping_mall.dto.ShoppingMallResponseDto;
+import googoo.joljol.shopping_mall.dto.ShoppingMallTop10Dto;
 import googoo.joljol.shopping_mall.entity.ShoppingMall;
 import googoo.joljol.shopping_mall.service.ShoppingMallService;
 import java.util.List;
@@ -39,7 +39,7 @@ public class ShoppingMallController {
     }
 
     @GetMapping("/top10")
-    public ResponseEntity<List<ShoppingMallResponseDto>> getTop10ShoppingMalls() {
+    public ResponseEntity<List<ShoppingMallTop10Dto>> getTop10ShoppingMalls() {
         return ResponseEntity.ok(shoppingMallService.getTop10ShoppingMalls());
     }
 }

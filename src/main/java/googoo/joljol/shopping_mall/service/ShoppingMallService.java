@@ -1,7 +1,7 @@
 package googoo.joljol.shopping_mall.service;
 
 import googoo.joljol.common.exception.CustomException;
-import googoo.joljol.shopping_mall.dto.ShoppingMallResponseDto;
+import googoo.joljol.shopping_mall.dto.ShoppingMallTop10Dto;
 import googoo.joljol.shopping_mall.entity.ShoppingMall;
 import googoo.joljol.shopping_mall.entity.ShoppingMallStats;
 import googoo.joljol.shopping_mall.repository.ShoppingMallRepository;
@@ -45,7 +45,7 @@ public class ShoppingMallService {
         return shoppingMall;
     }
 
-    public List<ShoppingMallResponseDto> getTop10ShoppingMalls() {
+    public List<ShoppingMallTop10Dto> getTop10ShoppingMalls() {
         return shoppingMallStatsRepository.findTop10ByOrderByViewCountDesc();
     }
 
