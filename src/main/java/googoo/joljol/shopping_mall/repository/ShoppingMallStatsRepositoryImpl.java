@@ -6,6 +6,7 @@ import static googoo.joljol.shopping_mall.entity.QShoppingMallStats.shoppingMall
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import googoo.joljol.shopping_mall.dto.ShoppingMallResponseDto;
+import googoo.joljol.shopping_mall.dto.ShoppingMallTop10Dto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -17,9 +18,9 @@ public class ShoppingMallStatsRepositoryImpl implements ShoppingMallStatsReposit
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<ShoppingMallResponseDto> findTop10ByOrderByViewCountDesc() {
+    public List<ShoppingMallTop10Dto> findTop10ByOrderByViewCountDesc() {
         return queryFactory
-            .select(Projections.constructor(ShoppingMallResponseDto.class,
+            .select(Projections.constructor(ShoppingMallTop10Dto.class,
                 shoppingMall.id,
                 shoppingMall.name,
                 shoppingMall.mallName,
