@@ -21,14 +21,14 @@ public class RedisToDatabaseScheduler {
     private final CacheableShoppingMallServiceV2 cacheableShoppingMallServiceV2;
     private final ShoppingMallStatsBatchRepository batchRepository;
 
-    @Scheduled(fixedRate = 1000 * 60 * 10) // 10분마다 실행 1000 * 60 * 10
+    @Scheduled(fixedRate = 1000 * 60 * 10)
     @Transactional
     public void syncRedisToDatabase() {
-        log.info("🔄 10분마다 Redis 데이터를 DB로 동기화 시작...");
-        Long zSetSize = redisTemplate.opsForZSet().size("top100Malls:zset");
+        log.info("🔄 Redis 데이터를 DB로 동기화 시작...");
+        long zSetSize = redisTemplate.opsForZSet().size("top100Malls:zset");
         long hashSize = redisTemplate.opsForHash().size("top100Malls:hash");
 
-        // 임시 방편
+        // temp
         if (zSetSize != hashSize) return;
 
         List<ShoppingMallResponseDto> cacheData = cacheableShoppingMallServiceV2.getCacheData(zSetSize);
