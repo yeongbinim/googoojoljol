@@ -21,7 +21,7 @@ public class RedisToDatabaseScheduler {
     private final CacheableShoppingMallServiceV2 cacheableShoppingMallServiceV2;
     private final ShoppingMallStatsBatchRepository batchRepository;
 
-    @Scheduled(fixedRate = 1000 * 60 * 1) // 10분마다 실행 1000 * 60 * 10
+    @Scheduled(fixedRate = 1000 * 60 * 10) // 10분마다 실행 1000 * 60 * 10
     @Transactional
     public void syncRedisToDatabase() {
         log.info("🔄 10분마다 Redis 데이터를 DB로 동기화 시작...");
