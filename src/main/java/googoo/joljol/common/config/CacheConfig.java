@@ -17,6 +17,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @EnableCaching
@@ -44,7 +45,10 @@ public class CacheConfig {
 //    public CacheManager cacheManager() {
 //        SimpleCacheManager cacheManager = new SimpleCacheManager();
 //        ArrayList<ConcurrentMapCache> caches = new ArrayList<>();
-//        caches.add(new ConcurrentMapCache("localCache_topMalls"));
+//        caches.addAll(List.of(
+//                new ConcurrentMapCache("top100Malls:list"),
+//                new ConcurrentMapCache("viewHistory")
+//        ));
 //        cacheManager.setCaches(caches);
 //        return cacheManager;
 //    }
