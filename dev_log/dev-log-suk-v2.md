@@ -4,8 +4,8 @@
 
 ## 📑 목차
 - [`Caching`을 이용한 쇼핑몰 랭킹 최적화 여정 DB부터 `Redis`까지](#-caching---------------------db----redis---)
-    * [1. V0: DB 조회](#1-v0--db---)
-    * [2. V1-1: `Spring Cache`를 이용한 캐싱 전략](#2-v1-1---spring-cache------------)
+    * [V0: DB 조회](#1-v0-db-조회)
+    * [2. V1-1: Spring Cache를 이용한 캐싱 전략](#2-v1-1-spring-cache를-이용한-캐싱-전략)
     * [3. V1-2: `Redis`를 이용한 캐싱 전략 1](#3-v1-2---redis-------------1)
     * [4. V1-3: `Spring-Cache`와 `Redis` 캐싱 방법](#4-v1-3---spring-cache----redis-------)
         + [<u> 4.1 `@Cacheable`을 이용한 랭킹 리스트 캐싱</u>](#-u--41---cacheable------------------u-)
