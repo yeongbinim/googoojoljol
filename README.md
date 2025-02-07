@@ -103,10 +103,17 @@ Synchronized -> DB Lock(Pessimistic, Optimistic) -> Redis 분산 Lock (Lettuce, 
 
 </details>
 <details>
-  <summary>2. 📀 인덱싱 - (내용 입력)</summary>
+  <summary>2. 📀 인덱싱 - 쇼핑몰 부분 일치 검색 최적화: 속도 7배 개선</summary>
   <br />
-  여기에 접힌 상태일 때 보일 내용을 작성합니다.
-  예를 들어, 자세한 설명, 코드 스니펫, 추가 자료 등을 넣을 수 있습니다.
+  
+> **문제점**: QueryDSL에서 `MATCH ... AGAINST` 구문을 지원하지 않는다. </br>
+> **개선**: `CustomFunction` + `NGRAM` 기반 인덱스 사용 </br>
+
+![Before](https://github.com/user-attachments/assets/ac77d312-6f91-4b9b-8322-432622ecc92b) </br>
+![After](https://github.com/user-attachments/assets/4f4f10e9-8651-4ae5-a1bd-739ed2f3ab4c) </br>
+
+
+> **개선 결과** : 137 ms -> 20 ms 약 7배 속도 개선
   <hr>
 </details>
 <details>
