@@ -9,12 +9,11 @@ import jakarta.persistence.Table;
 import java.time.LocalDate;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "shopping_mall")
+@Table(name = "shopping-mall")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ShoppingMall {
@@ -119,4 +118,5 @@ public class ShoppingMall {
 
     @Column(name = "monitoring_date", nullable = false)
     private LocalDate monitoringDate; // 모니터링 날짜 (필수)
+
 }

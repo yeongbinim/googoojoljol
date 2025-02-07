@@ -6,15 +6,16 @@ import googoo.joljol.shopping_mall.entity.QShoppingMall;
 import googoo.joljol.shopping_mall.entity.ShoppingMall;
 
 import java.util.List;
-import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.stereotype.Repository;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class ShoppingMallRepositoryImpl implements ShoppingMallRepositoryCustom {
