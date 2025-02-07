@@ -3,7 +3,7 @@
 1. [소개](#-소개)
 2. [Architecture + 기술 스택](#-architecture--기술-스택)
 3. [문제 해결](#-문제-해결)
-4. [추가로 개선 가능한 점](#-추가로-개선-가능한-점)
+4. [Members](#-Members)
 
 ## 📝 소개
 
@@ -15,7 +15,6 @@
 1. 동시성 제어
 2. 인덱싱
 3. 캐싱
-4. CI/CD 자동화 배포
 ```
 
 </br><img src="https://img.shields.io/badge/프로젝트 기간-2025.01.31~2025.02.07-green?style=flat&logo=&logoColor=white" />
@@ -23,6 +22,24 @@
 <br />
 
 ## 🏗️ Architecture & 기술 스택
+
+<div align="center"><img width="700" alt="image" src="https://github.com/user-attachments/assets/58c4c281-e31b-405c-bb16-78771a808ae8" /></div>
+<div align="center">
+  <img src="https://img.shields.io/badge/Java-007396?style=flat-square&logo=OpenJDK&logoColor=white">&nbsp;
+  <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=spring&logoColor=white">&nbsp;
+  <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white">&nbsp;
+  <img src="https://img.shields.io/badge/Gradle-02303A?style=flat-square&logo=gradle&logoColor=white">&nbsp;
+  <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white">&nbsp;
+  <img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white">&nbsp;
+  <img src="https://img.shields.io/badge/Amazon AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white">&nbsp;
+  <img src="https://img.shields.io/badge/Amazon EC2-FF9900?style=flat-square&logo=amazonec2&logoColor=white">&nbsp;
+  <img src="https://img.shields.io/badge/Amazon RDS-527FFF?style=flat-square&logo=amazonrds&logoColor=white">&nbsp;
+  <br/>
+  <img src="https://img.shields.io/badge/IntelliJ IDEA-000000?style=flat-square&logo=IntelliJ IDEA&logoColor=white">&nbsp;
+  <img src="https://img.shields.io/badge/Github-181717?style=flat-square&logo=github&logoColor=white">&nbsp;
+  <img src="https://img.shields.io/badge/git-F05032?style=flat-square&logo=git&logoColor=white">&nbsp;  
+</div>
+
 
 <br />
 
@@ -103,14 +120,33 @@
 
 [📌 상세한 구현 과정과 코드 설명이 궁금하다면?](/dev_log/dev-log-suk-v2.md)
 </details>
-<details>
-  <summary>4. 🚀 배포 CI/CD - (내용 입력)</summary>
-  <br />
-  여기에 접힌 상태일 때 보일 내용을 작성합니다.
-  예를 들어, 자세한 설명, 코드 스니펫, 추가 자료 등을 넣을 수 있습니다.
-  <hr>
-</details>
-
 <br />
 
-## 📈 추가로 개선 가능한 점
+
+## 👨‍👩‍👧‍👦 Members
+
+<table align="center">
+    <thead>
+        <tr>
+            <th>👑 팀장</th>
+            <th>팀원</th>
+            <th>팀원</th>
+            <th>팀원</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td align="center"><a href="https://github.com/yeongbinim"><img src="https://github.com/yeongbinim.png" width="100px;" alt=""/></a></td>
+            <td align="center"><a href="https://github.com/freedrawing"><img src="https://github.com/freedrawing.png" width="100px;" alt=""/></a></td>
+            <td align="center"><a href="https://github.com/sinwoo-kim"><img src="https://github.com/sinwoo-kim.png" width="100px;" alt=""/></a></td>
+            <td align="center"><a href="https://github.com/ju-young0"><img src="https://github.com/ju-young0.png" width="100px;" alt=""/></a></td>
+        </tr>
+        <tr>
+            <td align="center">임영빈</td>
+            <td align="center">강성욱</td>
+            <td align="center">김신우</td>
+            <td align="center">윤주영</td>
+        </tr>
+    </tbody>
+</table>
+
